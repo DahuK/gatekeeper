@@ -829,7 +829,8 @@ func (r *ReconcileConstraintTemplate) manageVAP(ctx context.Context, ct *v1beta1
 			currentVap = nil
 		}
 		logger.Info("get VAP", "vapName", vapName, "currentVap", currentVap)
-		transformedVap, err := transform.TemplateToPolicyDefinition(unversionedCT, vmhc.EnableDeleteOpsInVwhc)
+
+		transformedVap, err := transform.TemplateToPolicyDefinition(unversionedCT, vmhc.PolicyOpsInVwhc)
 		if err != nil {
 			logger.Error(err, "transform to VAP error", "vapName", vapName)
 			err := r.reportErrorOnCTStatus(ctx, ErrCreateCode, "Could not transform to VAP object", status, err)

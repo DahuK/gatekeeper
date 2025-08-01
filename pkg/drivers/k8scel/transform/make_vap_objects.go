@@ -16,7 +16,7 @@ import (
 	"k8s.io/utils/ptr"
 )
 
-func TemplateToPolicyDefinition(template *templates.ConstraintTemplate, enableDeleteOpsInVwhc *bool) (*admissionregistrationv1beta1.ValidatingAdmissionPolicy, error) {
+func TemplateToPolicyDefinition(template *templates.ConstraintTemplate, opsInVwhc schema.OpsInVwhc) (*admissionregistrationv1beta1.ValidatingAdmissionPolicy, error) {
 	source, err := schema.GetSourceFromTemplate(template)
 	if err != nil {
 		return nil, err
@@ -46,7 +46,7 @@ func TemplateToPolicyDefinition(template *templates.ConstraintTemplate, enableDe
 		return nil, err
 	}
 
-	operations, err := source.GetResourceOperations(enableDeleteOpsInVwhc)
+	operations, err := source.GetResourceOperations(opsInVwhc)
 	if err != nil {
 		return nil, err
 	}
